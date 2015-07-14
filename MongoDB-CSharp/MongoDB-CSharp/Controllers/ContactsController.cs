@@ -19,8 +19,7 @@ namespace MongoDB_CSharp.Controllers
             
             return mongoClient.GetDatabase(DatabaseName);
         }
-
-        // GET: Contacts
+        
         public async Task<ActionResult> Index()
         {
             var contactsCollection = RetreiveMongohqDb().GetCollection<BsonDocument>(CollectionName);
@@ -31,10 +30,42 @@ namespace MongoDB_CSharp.Controllers
 
             foreach (var item in allContacts)
             {
-                contacts.Add(new Models.Contact(item["firstname"].AsString, item["surname"].AsString));
+                contacts.Add(new Models.Contact
+                {
+                    FirstName = item["firstname"].AsString,
+                    Surname = item["surname"].AsString
+                });
             }
 
             return View(contacts);
+        }
+        
+        public ActionResult Create()
+        {
+            return View();
+        }
+        
+        [HttpPost]
+        public ActionResult Create(FormCollection collection)
+        {
+            try
+            {
+                var contactsCollection = RetreiveMongohqDb().GetCollection<BsonDocument>(CollectionName);
+
+                var contact = new BsonDocument
+                {
+                    { "firstname", collection["FirstName"] },
+                    { "surname", collection["Surname"] }
+                };
+                
+                contactsCollection.InsertOneAsync(contact);
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
         }
     }
 }

@@ -110,6 +110,7 @@
     <Content Include="packages.config" />
     <Content Include="Web.config.template" />
     <Content Include="Views\Contacts\Index.cshtml" />
+    <Content Include="Views\Contacts\Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
