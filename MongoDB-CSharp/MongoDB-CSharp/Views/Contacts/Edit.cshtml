@@ -1,0 +1,48 @@
+﻿@model MongoDB_CSharp.Models.Contact
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit</title>
+</head>
+<body>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.Id)
+        <div>
+            <h4>Contact</h4>
+            <hr />
+            <div>
+                @Html.LabelFor(model => model.FirstName)
+                <div>
+                    @Html.EditorFor(model => model.FirstName)
+                </div>
+            </div>
+    
+            <div>
+                @Html.LabelFor(model => model.Surname)
+                <div>
+                    @Html.EditorFor(model => model.Surname)
+                </div>
+            </div>
+    
+            <div>
+                <div>
+                    <input type="submit" value="Save"/>
+                </div>
+            </div>
+        </div>
+    }
+    
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</body>
+</html>
