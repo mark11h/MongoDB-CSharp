@@ -1,0 +1,42 @@
+﻿@model MongoDB_CSharp.Models.Contact
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Delete</title>
+</head>
+<body>
+    <h3>Are you sure you want to delete this?</h3>
+    <div>
+        <h4>Contact</h4>
+            <hr />
+            <div>
+                @Html.DisplayNameFor(model => model.FirstName)
+                <div>
+                    @Html.DisplayFor(model => model.FirstName)
+                </div>
+            </div>
+    
+            <div>
+                @Html.DisplayNameFor(model => model.Surname)
+                <div>
+                    @Html.DisplayFor(model => model.Surname)
+                </div>
+            </div>
+    
+        @using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+    
+            <div>
+                <input type="submit" value="Delete" /> | @Html.ActionLink("Back to List", "Index")
+            </div>
+        }
+    </div>
+</body>
+</html>

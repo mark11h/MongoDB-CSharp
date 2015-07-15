@@ -2,7 +2,6 @@
 using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -108,6 +107,45 @@ namespace MongoDB_CSharp.Controllers
 
                 contactsCollection.ReplaceOneAsync(filter, updatedContact);
                 
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+        
+        public async Task<ActionResult> Delete(string id)
+        {
+            var contactsCollection = RetreiveMongohqDb().GetCollection<BsonDocument>(CollectionName);
+
+            FilterDefinition<BsonDocument> filter = new BsonDocument("_id", ObjectId.Parse(id));
+
+            var contactToEdit = await contactsCollection.Find(filter).FirstOrDefaultAsync();
+
+            if (contactToEdit == null) return View("Index");
+
+            var contact = new Models.Contact
+            {
+                Id = contactToEdit["_id"].AsObjectId,
+                FirstName = contactToEdit["firstname"].AsString,
+                Surname = contactToEdit["surname"].AsString
+            };
+
+            return View(contact);
+        }
+        
+        [HttpPost]
+        public async Task<ActionResult> Delete(string id, FormCollection collection)
+        {
+            try
+            {
+                FilterDefinition<BsonDocument> filter = new BsonDocument("_id", ObjectId.Parse(id));
+
+                var contactsCollection = RetreiveMongohqDb().GetCollection<BsonDocument>(CollectionName);
+                
+                await contactsCollection.DeleteOneAsync(filter);
+
                 return RedirectToAction("Index");
             }
             catch
