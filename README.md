@@ -1,8 +1,8 @@
 # MongoDB-CSharp
 An MVC Web application in C# connecting to Mongo with CRUD operations.
 
-This is to demonstrate how to use Compose (MongoHQ) within a C# MVC application.
+This works with a basic hosted MongoLab database with a C# MVC Application.
 
-It will demonstrate this with a basic contact system.
+It is based on a very basic contact system.
 
 Please note that the web.config.template file will need renaming to web.config.
